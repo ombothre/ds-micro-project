@@ -1,0 +1,3 @@
+### Movie Recommendation and Search System
+
+This project is a web application built with **FastAPI** for the backend and **Streamlit** for the frontend, enabling users to search for movies by title, director, or genre and receive personalized movie recommendations. The application processes a movie dataset, offers an interactive user interface for searching and browsing, and provides RESTful API endpoints for efficient data retrieval.
