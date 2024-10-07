@@ -4,10 +4,8 @@ import requests
 # Set up the Streamlit app
 st.title("Movie Recommendation and Search System")
 
-# Set up tabs for the user to choose between 'Search' and 'Recommendations'
-tab = st.sidebar.selectbox("Choose an action", ["Search", "Recommendations"])
+tab = st.sidebar.selectbox("Choose an action", ["Recommendations", "Search"])
 
-# Function to fetch recommendations
 def fetch_recommendations(movie_title):
     response = requests.post(
         "http://localhost:8000/recommend", 
@@ -15,7 +13,6 @@ def fetch_recommendations(movie_title):
     )
     return response.json()
 
-# Function to search movies
 def search_movies(query, search_type):
     response = requests.post(
         "http://localhost:8000/search", 
@@ -23,20 +20,16 @@ def search_movies(query, search_type):
     )
     return response.json()
 
-# If user selects the 'Search' tab
 if tab == "Search":
     st.subheader("Search Movies")
-    
-    # Input box for query
+
     query = st.text_input("Enter search term (movie title, director, or genre)", "")
-    
-    # Dropdown to select search type
+
     search_type = st.selectbox("Search by", ["Title", "Director", "Genre"])
     
     if st.button("Search"):
         if query:
             try:
-                # Fetch search results from FastAPI
                 search_type_lower = search_type.lower()
                 search_results = search_movies(query, search_type_lower)
 
@@ -51,18 +44,14 @@ if tab == "Search":
         else:
             st.error("Please enter a search term")
 
-# If user selects the 'Recommendations' tab
 elif tab == "Recommendations":
     st.subheader("Movie Recommendations")
     
-    # Get movie title input from the user
     movie_title = st.text_input("Enter a movie title", "")
 
-    # Set up a button to trigger recommendation fetch
     if st.button("Get Recommendations"):
         if movie_title:
             try:
-                # Fetch recommendations from FastAPI
                 recommendations = fetch_recommendations(movie_title)
 
                 if "recommendations" in recommendations:
